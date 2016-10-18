@@ -6,9 +6,16 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script src="https://use.fontawesome.com/5100f2911b.js"></script>
   </head>
 
   <body>
     <%= yield %>
+
+    <footer>
+      <% @social_medias.each do |media| %>
+          <i class="<%= media.fa_i %>" aria-hidden='true'></i>
+      <% end %>
+    </footer>
   </body>
 </html>
