@@ -1,0 +1,8 @@
+<%= form_tag(admin_session_path, method: "post", id: "admin_login") do %>
+  <h2>Logga in</h2>
+  <%= text_field_tag(:user, "Användarnamn...") %><br>
+
+  <%= password_field_tag(:password, "Lösenord...") %><br>
+
+  <%= submit_tag("Logga in", class: "btn btn-m") %>
+<% end %>
