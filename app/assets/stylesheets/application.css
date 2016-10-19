@@ -19,6 +19,10 @@
 /* Global
 ------------------------------------------------------------------------------*/
 
+body, html {
+  height: 100%;
+}
+
 body {
   font-size: 20px;
   color: #444444;
@@ -33,10 +37,6 @@ body {
 
 h1, h2, h3 {
   font-family: "Geogrotesque", "Helvetica Neue", "Helvetica", sans-serif;
-}
-
-p {
-  font-size: 20px;
 }
 
 /* Animations
@@ -58,6 +58,25 @@ p {
   header #logo-big { animation: rotatein 1s ease backwards; }
   main { animation: fadein 0.5s ease backwards; }
 }
+
+
+/* Buttons
+------------------------------------------------------------------------------*/
+
+.btn {
+  -webkit-appearance: none;   /* Reset styling for the button */
+  -moz-appearance: none;
+  appearance: none;
+  padding: 10px 35px 10px 35px;
+  border: 2px solid white;
+  background: none;
+  color: white;
+  font-size: inherit;
+  cursor: pointer;
+  display: inline-block;
+  text-decoration: none;
+}
+
 /* Header
 ------------------------------------------------------------------------------*/
 
@@ -90,6 +109,39 @@ main {
   box-sizing: border-box;
   display: block;
   text-align: center;
+  min-height: 100%;
+}
+
+/* Login
+------------------------------------------------------------------------------*/
+
+#admin_login {
+  padding: 3% 5% 3% 5%;
+  background: #E22C24;
+  color: white;
+  display: inline-block;
+}
+
+#admin_login input {
+  font-size: inherit;
+  margin: 10px;
+}
+
+#admin_login input[type="text"],
+#admin_login input[type="password"] {
+  border: 0;
+  border-radius: 5px;
+  padding: 3%;
+  color: grey;
+}
+
+/* Navigation
+------------------------------------------------------------------------------*/
+
+nav {
+  display: block;
+  background: #E22C24;
+  padding: 20px 10px 20px 10px;
 }
 
 /* Paragraph layout
