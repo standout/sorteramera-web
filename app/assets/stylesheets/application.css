@@ -13,3 +13,116 @@
  *= require_tree .
  *= require_self
  */
+
+ /* All rules are in ascending order except body and text */
+
+/* Global
+------------------------------------------------------------------------------*/
+
+body {
+  font-size: 20px;
+  color: #444444;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  font-family: "Avenir Next", Lato, Helvetica, Arial, sans-serif;
+}
+
+/* Text
+------------------------------------------------------------------------------*/
+
+h1, h2, h3 {
+  font-family: "Geogrotesque", "Helvetica Neue", "Helvetica", sans-serif;
+}
+
+p {
+  font-size: 20px;
+}
+
+/* Animations
+------------------------------------------------------------------------------*/
+
+@keyframes fadein {
+    0% { transform: translateY(.25em); opacity: 0; }
+}
+
+@keyframes rotatein {
+  0% {
+    opacity: 0;
+    transform: rotate(180deg);
+  }
+}
+
+/* Only show animations on high end devices */
+@media screen and (min-width: 1000px) {
+  header #logo-big { animation: rotatein 1s ease backwards; }
+  main { animation: fadein 0.5s ease backwards; }
+}
+/* Header
+------------------------------------------------------------------------------*/
+
+header {
+  background: #E22C24;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  padding: 1.8%;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+header #logo-big {
+  max-height: 80%;
+  display: inline-block;
+}
+
+header h1 {
+  z-index: 1; /* Remove this later, when logo is svg or similar */
+  display: inline-block;
+}
+
+/* Main wrapper
+------------------------------------------------------------------------------*/
+
+main {
+  padding: 3%;
+  box-sizing: border-box;
+  display: block;
+  text-align: center;
+}
+
+/* Paragraph layout
+------------------------------------------------------------------------------*/
+
+article {
+  box-sizing: border-box;
+  max-width: 1000px;
+  display: inline-block;
+}
+
+/* Figures
+------------------------------------------------------------------------------*/
+
+.screenshot {
+  width: 100%;
+  margin: 0;      /* Excess margin fix */
+  background: black;
+  height: 250px;
+  border-radius: 20px;
+}
+
+/* Footer
+------------------------------------------------------------------------------*/
+
+footer {
+  display: block;
+  text-align: center;
+  background: #E22C24;
+  border: 10px solid #E22C24; /* Since padding doesn't work with lots o' children */
+  color: white;
+}
+
+footer {
+  font-size: 2em;
+}
