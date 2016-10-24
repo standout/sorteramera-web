@@ -2,4 +2,10 @@
   <%= link_to "Logga ut", admin_session_path, { method: :delete, class: "btn" } %>
 </nav>
 
-<h1>Välkommen <%= current_user.email %></h1>
+
+
+<main>
+  <h1>Välkommen <%= current_user.email %></h1>
+
+  <%= render 'change_requests' %>
+</main>

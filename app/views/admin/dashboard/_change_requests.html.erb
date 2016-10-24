@@ -1,0 +1,27 @@
+
+<%
+@changes['recycle_locations'].each do |change| %>
+    <div class="change-request">
+      <h2><%= change['info']['name'] %></h2>
+
+      <ul>
+        <%
+          comparable_change = change.except('info')
+          comparable_change.each do |individual_change|
+        %>
+          <li>
+            <h3><%= individual_change[0].capitalize %></h3>
+            <p>
+              <%= individual_change[1][0] %>
+              <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+              <%= individual_change[1][1]  %>
+            </p>
+          </li>
+        <% end %>
+      </ul>
+
+
+      <i class="fa fa-check fa-2x" aria-hidden="true"></i>
+      <i class="fa fa-times fa-2x" aria-hidden="true"></i>
+    </div>
+<% end %>
