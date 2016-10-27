@@ -3,25 +3,23 @@
 @changes['recycle_locations'].each do |change| %>
     <div class="change-request">
       <h2><%= change['info']['name'] %></h2>
-
-      <ul>
+      <%= form_tag  '/dashboard/submit_change', method: :post do %>
+        <%= hidden_field_tag :change_id, change['info']['change_id'] %>
         <%
           comparable_change = change.except('info')
           comparable_change.each do |individual_change|
         %>
-          <li>
-            <h3><%= individual_change[0].capitalize %></h3>
-            <p>
-              <%= individual_change[1][0] %>
-              <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-              <%= individual_change[1][1]  %>
-            </p>
-          </li>
+          <h3><%= individual_change[0].capitalize %></h3>
+          <% label_text = individual_change[1][0].to_s + " → " + individual_change[1][1].to_s %>
+
+          <%= label individual_change[0], label_text %>
+          <%= hidden_field_tag individual_change[0], '' %>
+          <%= check_box_tag individual_change[0] %><br><br>
         <% end %>
-      </ul>
 
-
-      <i class="fa fa-check fa-2x" aria-hidden="true"></i>
-      <i class="fa fa-times fa-2x" aria-hidden="true"></i>
+        <button type="submit">
+          <i class="fa fa-check fa-2x" aria-hidden="true"></i>
+        </button>
+      <% end %>
     </div>
 <% end %>

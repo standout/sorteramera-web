@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   get '/api', to: 'pages#api', as: "api"
   get '/admin', to: 'admin/sessions#new'
+  post '/dashboard/submit_change', to: 'admin/dashboard#submit_change'
 
   namespace :admin do
     resources :dashboard
