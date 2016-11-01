@@ -1,0 +1,25 @@
+
+<%
+@changes['recycle_locations'].each do |change| %>
+    <div class="change-request">
+      <h2><%= change['info']['name'] %></h2>
+      <%= form_tag  '/dashboard/submit_change', method: :post do %>
+        <%= hidden_field_tag :change_id, change['info']['change_id'] %>
+        <%
+          comparable_change = change.except('info')
+          comparable_change.each do |individual_change|
+        %>
+          <h3><%= individual_change[0].capitalize %></h3>
+          <% label_text = individual_change[1][0].to_s + " → " + individual_change[1][1].to_s %>
+
+          <%= label individual_change[0], label_text %>
+          <%= hidden_field_tag individual_change[0], '' %>
+          <%= check_box_tag individual_change[0] %><br><br>
+        <% end %>
+
+        <button type="submit">
+          <i class="fa fa-check fa-2x" aria-hidden="true"></i>
+        </button>
+      <% end %>
+    </div>
+<% end %>

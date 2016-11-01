@@ -77,6 +77,56 @@ h1, h2, h3 {
   text-decoration: none;
 }
 
+
+/* Change requests
+------------------------------------------------------------------------------*/
+
+.change-request {
+  border-radius: 10px;
+  display: block;
+  margin: auto;
+  margin-bottom: 50px;
+  max-width: 480px;
+  text-align: left;
+  padding: 25px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+.change-request ul { padding-left: 0; }
+
+.change-request ul li {
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.25);
+  padding: 10px;
+  border-radius: 5px 10px 5px 10px;
+  list-style-type: none;
+  margin-bottom: 15px;
+  transition: all 0.2s ease;
+}
+
+.change-request > i {
+  float: right;
+  margin: 5px;
+}
+
+.change-request h3 {
+  margin-top: 0;
+}
+
+.change-request p {
+  margin-bottom: 0;
+}
+
+.selected-request {
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25) !important;
+  background: #BCED91;
+}
+
+.change-request button[type="submit"] {
+  border: 0;
+  background: none;
+  float: right;
+}
+
 /* Header
 ------------------------------------------------------------------------------*/
 
