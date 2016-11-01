@@ -7,24 +7,23 @@ class Admin::DashboardController < ApplicationController
 
   def index
     # Get pending changes and pass to view
-    res = ChangeSubmission.get_pending_changes
+    res = APIInteraction.get_pending_changes
     @changes = res
   end
 
   def submit_change
     # Filter permitted parameters
-    permitted = ChangeSubmission.permitted_params(params)
+    trash = %w(authenticity_token utf8 controller action)
+    permitted = params.except(*trash).permit!
 
     # Set admin token and email
-    user_id = session[:user_id]
-    permitted['admin_token'] = ChangeSubmission.get_admin_token(user_id)
-    permitted['email'] = User.find(user_id).email
+    permitted[:admin_token] = session[:admin_token]
 
     # Format to JSON
     body = permitted.to_json
 
     # Get response
-    res = ChangeSubmission.submit_response(body)
+    res = APIInteraction.submit_response(body)
 
     # Raise error if request head wasn't ok
     raise "Couldn't send request" if res.code != "200"

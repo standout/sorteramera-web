@@ -8,10 +8,10 @@ class Admin::SessionsController < ApplicationController
   end
 
   def create
-    current_user = User.find_by(email: params[:user]).try(:authenticate, params[:password])
+    admin_token = APIInteraction.get_token(params[:email], params[:password])
 
-    if current_user
-      session[:user_id] = current_user.id
+    if admin_token
+      session[:admin_token] = admin_token
       redirect_to admin_dashboard_index_path
     else
       redirect_to :back, alert: 'Fel användarnamn eller lösenord, var vänlig försök igen!'
