@@ -1,15 +1,13 @@
 class ApplicationController < ActionController::Base
+  API_PATH = "http://localhost:3000"
+
   protect_from_forgery with: :exception
 
-  helper_method :current_user, :is_logged_in, :require_login
+  helper_method :is_logged_in, :require_login
   before_action :social_medias
 
-  def current_user
-    @current_user ||= User.find_by(id: session[:user_id])
-  end
-
   def is_logged_in
-    !current_user.nil?
+    session[:admin_token] ? true : false
   end
 
   def require_login
