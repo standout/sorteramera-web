@@ -1,5 +1,6 @@
 class Request < ActiveRecord::Base
   def self.post(path, body, content_type = "json")
+<<<<<<< HEAD
     http_req(path, "post", body.to_json)
   end
 
@@ -9,6 +10,17 @@ class Request < ActiveRecord::Base
 
   def self.put(path, body, content_type = "json")
     http_req(path, "put", body)
+=======
+    res = http_req(path, "post", body.to_json)
+  end
+
+  def self.get(path, content_type = "json")
+    res = http_req(path, "get")
+  end
+
+  def self.put(path, body, content_type = "json")
+    res = http_req(path, "put", body)
+>>>>>>> 1e1337c7438d6bc2e47e4e1bb78685d8f7489554
   end
 
   def self.http_req(path, type, body = "", content_type = "json")
@@ -35,7 +47,11 @@ class Request < ActiveRecord::Base
     end
 
     # Return response
+<<<<<<< HEAD
     Net::HTTP::start(uri.hostname, uri.port) {|http|
+=======
+    res = Net::HTTP::start(uri.hostname, uri.port) {|http|
+>>>>>>> 1e1337c7438d6bc2e47e4e1bb78685d8f7489554
       http.request(req)
     }
   end
