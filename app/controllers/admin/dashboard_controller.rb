@@ -18,7 +18,7 @@ class Admin::DashboardController < ApplicationController
 
     # Set admin token and email
     permitted[:admin_token] = session[:admin_token]
-
+    binding.pry
     # Format to JSON
     body = permitted.to_json
 

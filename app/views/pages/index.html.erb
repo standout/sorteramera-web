@@ -1,17 +1,24 @@
-<header>
-  <%= image_tag "Logo.png", id: "logo-big" %>
-  <h1 id="logo-title">Sortera Mera</h1>
+<header id="landing-header">
+  <%= image_tag "Logo.svg", id: "logo-big" %>
+  <h1>Sorteramera</h1>
+  <p>
+    Med hjälp av Sorteramera kan du hitta din närmsta återvinningsstation
+    eller återvinningscentral och även få vägbeskrivning dit.
+  </p>
+  <br>
+  <a id="appstore" href="https://itunes.apple.com/se/app/sorteramera/id1114907982?mt=8" >
+    <img src='<%= image_path("Download_on_the_App_Store_Badge_SE_135x40.svg") %>' alt="Hämta i Appstore">
+  </a>
+  <a id="api-badge" hreflang=""href="<%= api_path %>">
+    API dokumentation
+  </a>
 </header>
 
-<main>
-  <article>
-    <h2>Idéen av appen</h2>
-    <p>
-      Med hjälp av Sorteramera kan du hitta din närmsta återvinningsstation eller återvinningscentral
-      och även få vägbeskrivning dit. För varje återvinningsstation kan du får reda på information
-      om vilka material som går att återvinna, vilken adress eller ort den finns på och även vilka öppettider stationen eller centralen har.
-    </p>
+<div id="iphone">
+  <div id="camera"></div>
+  <div id="speaker"></div>
+  <figure id="screen" style="background: url(<%= asset_path('screenshot1.jpg') %>)">
+  </figure>
+</div>
 
-    <img class="screenshot">
-  </article>
-</main>
+<div id="backdrop"></div>
