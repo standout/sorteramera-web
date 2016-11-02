@@ -24,26 +24,89 @@ body, html {
 }
 
 body {
-  font-size: 20px;
-  color: #444444;
+  font-size: 18px;
+  background: #E22C24;
   padding: 0;
   margin: 0;
   position: relative;
-  font-family: "Avenir Next", Lato, Helvetica, Arial, sans-serif;
+  font-family: Lato, Helvetica, Arial, sans-serif;
+}
+
+@media screen and (max-width: 320px) {
+  body {
+    font-size: 15px;
+  }
 }
 
 /* Text
 ------------------------------------------------------------------------------*/
 
 h1, h2, h3 {
-  font-family: "Geogrotesque", "Helvetica Neue", "Helvetica", sans-serif;
+  font-family: "Helvetica", sans-serif;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+  color: #E22C24;
+}
+
+#api-badge {
+  text-decoration: underline;
+  color: #F4BFBF;
+  font-size: 14px;
+}
+
+#appstore {
+  display: block;
+}
+
+/* Articles
+------------------------------------------------------------------------------*/
+
+article {
+  box-sizing: border-box;
+  max-width: 720px;
+  display: inline-block;
+  text-align: left;
+  background: white;
+  padding: 50px;
+  border-radius: 10px;
+}
+
+code {
+  display: block;
+  overflow-x: scroll;
+}
+
+code, .inline-code {
+  border-radius: 8px;
+  background: #F0F0F0;
+  padding: 5px;
+}
+
+.inline-code {
+  white-space: normal;
+  display: inline-block;
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+@media screen and (max-width: 720px) {
+  article {
+    max-width: 95%;
+  }
+
+  article ul {
+    padding-left: 0;
+  }
 }
 
 /* Animations
 ------------------------------------------------------------------------------*/
 
 @keyframes fadein {
-    0% { transform: translateY(.25em); opacity: 0; }
+    0% { opacity: 0; }
 }
 
 @keyframes rotatein {
@@ -53,12 +116,33 @@ h1, h2, h3 {
   }
 }
 
-/* Only show animations on high end devices */
-@media screen and (min-width: 1000px) {
-  header #logo-big { animation: rotatein 1s ease backwards; }
-  main { animation: fadein 0.5s ease backwards; }
+@keyframes slidein {
+  0% { transform: translateY(10em); }
 }
 
+@keyframes slideinphone {
+  0% { transform: translate(-50%, 10em); }
+}
+
+/* Only show animations on high end devices */
+@media screen and (min-width: 1000px) {
+  header { animation: fadein 1s ease-out backwards; }
+  #backdrop { animation: slidein 0.8s cubic-bezier(0.000, 0.000, 0.000, 1.000) backwards; }
+  #iphone { animation: slideinphone 1s cubic-bezier(0.000, 0.000, 0.000, 1.000) backwards }
+}
+
+/* Backdrop
+------------------------------------------------------------------------------*/
+
+#backdrop {
+  display: block;
+  background: #B32524;
+  height: 25vh;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  z-index: -1;
+}
 
 /* Buttons
 ------------------------------------------------------------------------------*/
@@ -130,7 +214,8 @@ h1, h2, h3 {
 /* Header
 ------------------------------------------------------------------------------*/
 
-header {
+
+header.standard-header {
   background: #E22C24;
   display: flex;
   align-items: center;
@@ -141,14 +226,33 @@ header {
   box-sizing: border-box;
 }
 
-header #logo-big {
-  max-height: 80%;
+header.standard-header h1 {
   display: inline-block;
 }
 
-header h1 {
-  z-index: 1; /* Remove this later, when logo is svg or similar */
+#landing-header {
+  display: block;
+  height: 30vh;
+  width: 100%;
+  text-align: center;
+  padding: 25px 5px 5px 5px;
+  color: white;
+}
+
+#landing-header #logo-big {
+  height: 30%;
   display: inline-block;
+}
+
+#landing-header h1 {
+  margin: 0;
+}
+
+#landing-header p {
+  color: #F5BFBE;
+  max-width: 400px;
+  display: inline-block;
+  margin-top: 0;
 }
 
 /* Main wrapper
@@ -160,6 +264,84 @@ main {
   display: block;
   text-align: center;
   min-height: 100%;
+}
+
+@media screen and (max-width: 720px) {
+  main { padding: 0; }
+}
+
+/* iPhone
+------------------------------------------------------------------------------*/
+
+#iphone {
+  border-width: 4px 4px 0;
+  border-color: grey;
+  border-style: solid;
+  width: 38vh;
+  max-width: 90%;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+  background: black;
+  display: block;
+  position: absolute;
+  transform: translateX(-50%);
+  left: 50%;
+  bottom: 0;
+}
+
+/* Maintains aspect ratio since padding-top is calculated based of width */
+#iphone:after {
+  padding-top: 135%;
+  display: block;
+  content: "";
+}
+
+#iphone #camera {
+  position: absolute;
+  background: grey;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  top: 8%;
+  left: 25%;
+}
+
+#iphone #camera:after {
+  display: block;
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  top: 2px;
+  left: 2px;
+  z-index: 1;
+  background: black;
+  border-radius: 50%;
+}
+
+#iphone #speaker {
+  position: absolute;
+  top: calc(8% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20%;
+  height: 5px;
+  content: "";
+  background: grey;
+  border-radius: 5px;
+}
+
+#iphone figure {
+  width: 90%;
+  height: 80%;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  background-size: cover !important; /* Since background is specified in view
+                                      it won't work without !important */
+  display: block;
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 0;
 }
 
 /* Login
@@ -192,15 +374,6 @@ nav {
   display: block;
   background: #E22C24;
   padding: 20px 10px 20px 10px;
-}
-
-/* Paragraph layout
-------------------------------------------------------------------------------*/
-
-article {
-  box-sizing: border-box;
-  max-width: 1000px;
-  display: inline-block;
 }
 
 /* Figures

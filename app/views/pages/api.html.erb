@@ -1,18 +1,477 @@
-<header>
-  <%= image_tag "Logo.png", id: "logo-big" %>
-  <h1 id="logo-title">Sortera Mera API</h1>
-</header>
-
 <main>
-  <article>
-    <h2>Nu även ett API!</h2>
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
-      ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+    <article class="markdown-body entry-content" itemprop="text">
+        <h1 id="api-documentation">API Documentation</h1>
 
-      Besök <a href="#">dokumentationen</a> för att veta mer!                                               <!-- TODO Add link to documentation page -->
-    </p>
-    <img class="screenshot">
-  </article>
+        <p>Sorteramera is an application made for listing the nearest recycle locations. This is the documentation for the Sortera Mera API. All info is obtainable without
+            <a href="#authorisation">authorisation</a>, however updating entries can only be done by admins.</p>
+
+        <h3>Terminology</h3>
+
+        <ul>
+            <li>
+                <p>
+                    <strong>Recycle location</strong>
+                </p>
+
+                <p>A recycle location is a recycle center or station. The entry in the database contains information about opening hours, city, materials you can recycle etc.</p>
+            </li>
+            <li>
+                <p>
+                    <strong>Change request</strong>
+                </p>
+
+                <p>If the info provided about a recycle location is faulty a change request can be made. The change request will be saved separately and not be applied until approved by an admin.</p>
+            </li>
+        </ul>
+
+        <h2 id="get-closest-recycle-locations">Get closest recycle locations</h2>
+
+        <p>To get nearby recycle locations you make a
+            <span class="inline-code">GET</span>
+            request containing longitude and latitude of your location.</p>
+
+        <ul>
+            <li>
+                <p>
+                    <strong>URL</strong>
+                </p>
+
+                <p>
+                    <span class="inline-code">/recycle_locations</span>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Method</strong>
+                </p>
+
+                <p>
+                    <span class="inline-code">GET</span>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>URL params</strong>
+                </p>
+
+                <p>
+                    <strong>Required</strong>
+                </p>
+
+                <p>
+                    <span class="inline-code">longitude=[float]</span>
+                </p>
+
+                <p>
+                    <span class="inline-code">latitude=[float]</span>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Success</strong>
+                </p>
+
+                <p>
+                    <strong>Code:</strong>
+                    200</p>
+
+                <p>
+                    <strong>Content example:</strong>
+                </p>
+
+                <pre><code>
+"recycle_locations" : [
+  {
+    "id": 1,
+    "name": "Asarum",
+    "kind": "recycle_station",
+    "materials": [
+      "glass",
+      "cardboard",
+      "metal",
+      "plastic",
+      "magazines"
+    ],
+    "latitude": 56.2075,
+    "longitude": 14.85139,
+    "street_name": null,
+    "zip_code": null,
+    "city": "Asarum",
+    "created_at": "2016-10-20T09:43:59.337Z",
+    "updated_at": "2016-10-20T09:43:59.337Z",
+    "opening_hours": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "distance": 0,
+    "bearing": "0.0"
+  }
+
+...
+    </code></pre>
+            </li>
+        </ul>
+
+        <h2 id="submit-a-change-request">Submit a change request</h2>
+
+        <p>A change request can be sent to the API. The request will be saved and applied on
+            <a href="#apply-change-request">admin confirmation</a>.</p>
+
+        <ul>
+            <li>
+                <p>
+                    <strong>URL</strong>
+                </p>
+
+                <p>
+                    <span class="inline-code">/change_request/:location_id</span>
+                </p>
+
+                <p>
+                    <em>Where location_id is the id of the recycle location.</em>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Method</strong>
+                </p>
+
+                <p>
+                    <span class="inline-code">POST</span>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Data params</strong>
+                </p>
+
+                <p>The data should contain the keys and values of the requested changes. Arrays will be handled automatically. Therefore if change to only one array item is requested an array should be sent with the other values empty.</p>
+
+                <pre><code>
+{
+    "city" : "Gotham",
+    "opening_hours" : [ , "10:00", , , , ,]
+}
+    </code></pre>
+
+                <p>
+                    <em>This request suggests the city name is Gotham and that the tuesday opening hour is 10:00</em>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Success</strong>
+                </p>
+
+                <p>
+                    <em>A change is added to the queue.</em>
+                </p>
+
+                <p>
+                    <strong>Code:</strong>
+                    200</p>
+            </li>
+            <li>
+                <p>
+                    <strong>Example</strong>
+                </p>
+
+                <p>
+                    <strong>Content:</strong>
+                </p>
+
+                <pre><code>
+{
+    "city" : "Elite",
+    "opening_hours" : [ , , , , ,"13:37" , ]
+}
+    </code></pre>
+
+                <p>
+                    <em>Would request a change to the recycle location with id 1337. The request suggests that the town name is Elite and that the recycle location opens at 13:37 on saturdays.</em>
+                </p>
+            </li>
+        </ul>
+
+        <h2>Get pending changes</h2>
+
+        <p>To get all queued changes you can make a
+            <span class="inline-code">GET</span>
+            request to the API.</p>
+
+        <ul>
+            <li>
+                <p>
+                    <strong>URL</strong>
+                </p>
+
+                <p>
+                    <span class="inline-code">/pending_changes</span>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Method</strong>
+                </p>
+
+                <p>
+                    <span class="inline-code">GET</span>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Success</strong>
+                </p>
+
+                <p>
+                    <strong>Code:</strong>
+                    200</p>
+
+                <p>
+                    <strong>Content:</strong>
+                </p>
+
+                <p>A
+                    <span class="inline-code">JSON</span>
+                    array containing all queued changes.</p>
+
+                <p>
+                    <strong>Returns:</strong>
+                </p>
+
+                <pre><code>
+{
+    "recycle_locations": [
+    {
+      "info": {
+        "name": "Hogwarts",
+        "change_id": 1,
+        "created_at": "2016-11-01T09:54:27.621Z"
+    },
+      "latitude" : [51.7506, 51.8674],
+      "longitude" : [-1.2566, -2.2469]
+    },
+    {
+      "info": {
+        "name": "Gotham",
+        "change_id": 2,
+        "created_at": "2016-11-01T09:54:27.621Z"
+      },
+      "opening_hours_mon" : ["12:00", "10:00"],
+      "opening_hours_sat" : ["10:00", "9:00"]
+    },
+
+    ...
+}
+    </code></pre>
+            </li>
+            <li>
+                <p>
+                    <strong>Notes</strong>
+                </p>
+
+                <ul>
+                    <li>
+                        <em>Each returned object in the array will contain changes specific to the corresponding recycle location.</em>
+                    </li>
+                    <li>
+                        <em>The 'info' key contains information about the change request.</em>
+                    </li>
+                    <li>Array changes comes formatted. For example a change to
+                        <span class="inline-code">opening_hours[0]</span>
+                        would be returned with the key
+                        <span class="inline-code">opening_hours_mon</span>
+                    <li>The
+                        <span class="inline-code">change_id</span>
+                        value is used when you want to
+                        <a href="#apply-change-request">apply the change</a>.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2 id="authorisation">Authorisation</h2>
+
+        <p>Authorisation has to be made before any recycle locations entries can be
+            <a href="#apply-change-request">updated</a>. By sending a
+            <span class="inline-code">POST</span>
+            request to the API; containing user email and password, you will be provided with an authorisation token. The token will be required when making any entry update. The token lasts for 24 hours.</p>
+
+        <h3>Get admin token</h3>
+
+        <ul>
+            <li>
+                <p>
+                    <strong>URL</strong>
+                </p>
+
+                <p>
+                    <span class="inline-code">/authenticate</span>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Method</strong>
+                </p>
+
+                <p>
+                    <span class="inline-code">POST</span>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Data params</strong>
+                </p>
+
+                <p>
+                    <strong>Content-Type:</strong>
+                    <span class="inline-code">JSON</span></p>
+
+                <pre><code>
+{
+    "email" : "foo@bar.com",
+    "password" : "foobar"
+}
+    </code></pre>
+
+                <p>
+                    <em>The sent data must contain user email and password.</em>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Success</strong>
+                </p>
+
+                <p>
+                    <strong>Code:</strong>
+                    200</p>
+
+                <p>
+                    <strong>Content:</strong>
+                    A
+                    <span class="inline-code">JSON</span>
+                    object containing the token.</p>
+            </li>
+            <li>
+                <p>
+                    <strong>Example</strong>
+                </p>
+
+                <p>
+                    <strong>Content:</strong>
+                </p>
+
+                <pre><code>
+{
+    "email" : "foo@bar.com",
+    "password" : "foobar"
+}
+    </code></pre>
+
+                <p>
+                    <strong>Returns:</strong>
+                </p>
+
+                <pre><code>
+{
+    "auth_token" : "super_secret_super_cool_token"
+}
+    </code></pre>
+
+                <h2 id="apply-change-request">Apply change request</h2>
+
+                <p>To apply a change request you must provide a valid token. See
+                    <a href="#authorisation">previous</a>
+                    article to see how you can obtain a token.</p>
+
+                <ul>
+                    <li>
+                        <p>
+                            <strong>URL</strong>
+                        </p>
+
+                        <p>
+                            <span class="inline-code">/apply_change</span>
+                        </p>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <p>
+                    <strong>Method</strong>
+                </p>
+
+                <p>
+                    <span class="inline-code">PUT</span>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Data params</strong>
+                </p>
+
+                <p>
+                    <strong>Content-Type:</strong>
+                    <span class="inline-code">JSON</span></p>
+
+                <pre><code>
+{
+    "change_id" : 123,
+    "auth_token" : "super_secret_super_cool_token",
+    "opening_hours_mon" : "1"
+    "city" : ""
+}
+    </code></pre>
+            </li>
+            <li>
+                <p>
+                    <strong>Success</strong>
+                </p>
+
+                <p>
+                    <strong>Code:</strong>
+                    200</p>
+
+                <p>
+                    <em>Recycle location will be updated in the database</em>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Example</strong>
+                </p>
+
+                <p>
+                    <strong>Content:</strong>
+                </p>
+
+                <pre><code>
+{
+    "change_id" : 123,
+    "auth_token" : "super_secret_super_cool_token",
+    "opening_hours_mon" : "1"
+    "city" : ""
+}
+    </code></pre>
+
+                <p>
+                    <em>This will apply the marked changes to the change request with id 123. This will only happen if the auth_token is valid.</em>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>Notes</strong>
+                </p>
+
+                <ul>
+                    <li>Change requests are customized to work with html forms, each indivudal change represented by a checkbox. Therefore a non empty string will apply that change whilst an empty string wont.</li>
+                </ul>
+            </li>
+        </ul>
+    </article>
 </main>

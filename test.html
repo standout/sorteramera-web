@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <style>
+      html, body{
+        height: 100%;
+      }
+
+      body {
+        background: #E22C24;
+        margin: 0;
+        padding: 0;
+      }
+
+      #iphone {
+        border-width: 4px 4px 0;
+        border-color: grey;
+        border-style: solid;
+        width: 40vh;
+        max-width: 90%;
+        border-top-left-radius: 50px;
+        border-top-right-radius: 50px;
+        background: black;
+        display: block;
+        position: absolute;
+        transform: translateX(-50%);
+        left: 50%;
+        bottom: 0;
+      }
+
+      #iphone:after {
+        padding-top: 170%;
+        display: block;
+        content: "";
+      }
+
+      #iphone #camera {
+        position: absolute;
+        background: grey;
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        top: 8%;
+        left: 25%;
+      }
+
+      #iphone #camera:after {
+        display: block;
+        content: "";
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        top: 2px;
+        left: 2px;
+        z-index: 1;
+        background: black;
+        border-radius: 50%;
+      }
+
+      #iphone #speaker {
+        position: absolute;
+        top: calc(8% + 6px);
+        left: 50%;
+        transform: translateX(-50%);
+        width: 20%;
+        height: 5px;
+        content: "";
+        background: grey;
+        border-radius: 5px;
+      }
+    </style>
+
+    <div id="iphone">
+      <div id="camera"></div>
+      <div id="speaker"></div>
+    </div>
+
+  </body>
+</html>
